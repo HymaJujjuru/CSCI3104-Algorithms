@@ -1,0 +1,267 @@
+\documentclass[11pt]{article} 
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos, color=orange!50]{todonotes}
+\usepackage{hyperref}
+\usepackage[numbers, square]{natbib}
+\usepackage{fancybox}
+\usepackage{epsfig}
+\usepackage{soul}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage[shortlabels]{enumitem}
+\usepackage[version=4]{mhchem}
+\usepackage{multicol}
+\usepackage{forest}
+\usepackage{mathtools}
+\usepackage{comment}
+\usepackage{enumitem}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{color}
+\usepackage[numbers]{natbib}
+\usepackage{subfiles}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+
+
+\newtheorem{prop}{Proposition}[section]
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{cor}{Corollary}[prop]
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+\theoremstyle{definition}
+\newtheorem{required}{Problem}
+\newtheorem*{requiredHC}{Problem HC}
+
+\theoremstyle{definition}
+\newtheorem{ex}{Example}
+
+\newcommand{\interval}[4]{\draw (#2, #1) -- (#3, #1); % Usage: \interval{height}{start}{end}{label}
+\draw (#2, #1-0.11) -- (#2, #1+0.11); % draw left whisker
+\draw (#3, #1-0.11) -- (#3, #1+0.11); % draw right whisker
+\node[] at (#2-0.25, #1) {#4};
+}
+
+
+\setlength{\marginparwidth}{3.4cm}
+%#########################################################
+
+%To use symbols for footnotes
+\renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+%To change footnotes back to numbers uncomment the following line
+%\renewcommand*{\thefootnote}{\arabic{footnote}}
+
+% Enable this command to adjust line spacing for inline math equations.
+% \everymath{\displaystyle}
+
+% _______ _____ _______ _      ______ 
+%|__   __|_   _|__   __| |    |  ____|
+%   | |    | |    | |  | |    | |__   
+%   | |    | |    | |  | |    |  __|  
+%   | |   _| |_   | |  | |____| |____ 
+%   |_|  |_____|  |_|  |______|______|
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{
+\normalfont \normalsize 
+\textsc{CSCI 3104 Fall 2024 \\ 
+Instructor: Dr. Lijun Chen} \\
+[10pt] 
+\rule{\linewidth}{0.5pt} \\[6pt] 
+\huge Problem Set 1 [100 pts] \\
+\rule{\linewidth}{2pt}  \\[10pt]
+}
+%\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%FILL IN YOUR NAME%%%%%%%
+%%%%%%%%%%AND STUDENT ID%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent
+Due Date \dotfill September 10, 2024  \\
+Name \dotfill \textbf{Your Name} \\
+Student ID \dotfill \textbf{Your Student ID} \\
+Collaborators \dotfill \textbf{List Your Collaborators Here}
+
+\tableofcontents
+
+\section*{Instructions}
+\addcontentsline{toc}{section}{Instructions}
+ \begin{itemize}
+	\item The solutions \textbf{should be typed}, using proper mathematical notation. We cannot accept hand-written solutions. \href{http://ece.uprm.edu/~caceros/latex/introduction.pdf}{Here's a short intro to \LaTeX.}
+	\item You should submit your work through the \textbf{class Gradescope page} only (linked from Canvas). Please submit one PDF file, compiled using this \LaTeX \ template.
+	\item You may not need a full page for your solutions; pagebreaks are there to help Gradescope automatically find where each problem is. Even if you do not attempt every problem, please submit this document with no fewer pages than the blank template (or Gradescope has issues with it).
+
+	\item You are welcome and encouraged to collaborate with your classmates, as well as consult outside resources. You must \textbf{cite your sources in this document.} \textbf{Copying from any source is an Honor Code violation. Furthermore, all submissions must be in your own words and reflect your understanding of the material.} If there is any confusion about this policy, it is your responsibility to clarify before the due date. 
+
+	\item Posting to \textbf{any} service including, but not limited to Chegg, Reddit, StackExchange, etc., for help on an assignment is a violation of the Honor Code.
+
+	\item You \textbf{must} virtually sign the Honor Code (see Section \ref{HonorCode}). Failure to do so will result in your assignment not being graded.
+\end{itemize}
+
+
+\section*{Honor Code (Make Sure to Virtually Sign) [10 pts]} \label{HonorCode} 
+\addcontentsline{toc}{section}{Honor Code (Make Sure to Virtually Sign) [10 pts]}
+
+\begin{requiredHC}
+\begin{itemize}
+\item My submission is in my own words and reflects my understanding of the material.
+\item Any collaborations and external sources have been clearly cited in this document.
+\item I have not posted to external services including, but not limited to Chegg, Reddit, StackExchange, etc.
+\item I have neither copied nor provided others solutions they can copy.
+\end{itemize}
+
+%\noindent In the specified region below, clearly indicate that you have upheld the Honor Code. Then type your name. 
+\end{requiredHC}
+
+\begin{proof}[Agreed (signature here).]
+%% Typing "I agree to the above," followed by your name is sufficient.
+\end{proof}
+
+
+\newpage
+\section{Proof by Induction and Loop Invariants}
+
+\subsection{Problem \ref{Induction1} \textbf{[10 pts]}}
+\begin{required} \label{Induction1}
+A student is trying to prove by induction that for all \( n \geq 1 \), the sum of the first \( n \) odd numbers is a perfect square.
+
+\begin{proof}[Student's Proof]The proof is by induction on \( n \geq 1 \).
+
+\begin{itemize}
+    \item \textbf{Base Case:} When \( n = 1 \), the sum of the first 1 odd number is \( 1 \), which is equal to \( 1^2 \). Thus, the statement holds for \( n = 1 \).
+
+    \item \textbf{Inductive Hypothesis:} Now suppose that for some \( k \geq 2 \), the sum of the first \( k \) odd numbers is \( k^2 \).
+
+    \item \textbf{Inductive Step:} We now consider the \( k+1 \) case. We need to show that the sum of the first \( k+1 \) odd numbers is \( (k+1)^2 \). By the inductive hypothesis, the sum of the first \( k \) odd numbers is \( k^2 \). Adding the next odd number \( 2k+1 \) to this sum gives:
+
+\[
+k^2 + (2k + 1) = (k + 1)^2
+\]
+
+Therefore, the sum of the first \( k+1 \) odd numbers is \( (k + 1)^2 \), which is a perfect square. The result follows by induction.
+
+\end{itemize}
+
+However, there are two errors in this proof:
+
+\begin{enumerate}
+    \item[(a)] The Inductive Hypothesis is not correct. Write an explanation to the student explaining why their Inductive Hypothesis is not correct. Rewrite a corrected Inductive Hypothesis. \textbf{[5 pts]}
+
+    \begin{proof}[Answer]
+    %Your answer goes here
+    \end{proof}
+    
+    \item[(b)] The Inductive Step is not correct. Write an explanation to the student explaining why their Inductive Step is not correct. Rewrite a corrected Inductive Step. \textbf{[5 pts]}
+    
+    \begin{proof}[Answer]
+    %Your answer goes here
+    \end{proof}
+\end{enumerate}
+
+\end{proof}
+\end{required}
+
+\newpage
+\subsection{Problem \ref{Induction2} \textbf{[15 pts]}} 
+\begin{required} \label{Induction2}
+Consider the recurrence relation, defined as follows:
+\[
+T_{n} = \begin{cases} 2 & : n = 0, \\
+22 & : n = 1, \\
+-2 T_{n-1} + 35 T_{n-2} & : n \geq 2.
+\end{cases}
+\]
+
+\noindent Prove by induction that $T_{n} = (-1) \cdot (-7)^{n} + 3 \cdot (5)^{n}$, for all integers $n \in \mathbb{N}$. [\textbf{Recall:} $\mathbb{N} = \{0, 1, 2, \ldots \}$ is the set of non-negative integers.]
+\end{required}
+
+\begin{proof}
+%Your proof goes here.
+\end{proof}
+
+\newpage
+\subsection{Problem \ref{Induction3} \textbf{[15 pts]}}
+\begin{required} \label{Induction3}
+Use mathematical induction to show that when \( n \geq 4 \) is an exact power of 3, the solution of the recurrence
+
+\[
+T(n) = 
+\begin{cases} 
+3 & \text{if } n = 3, \\
+3T(n/3) + n & \text{if } n > 3
+\end{cases}
+\]
+
+is \( T(n) = n \log_3 n \).
+\end{required}
+
+\begin{proof}
+%Your proof goes here
+\end{proof}
+
+\newpage
+\subsection{Problem \ref{LoopInvariant1} \textbf{[25 pts]}}
+\begin{required} \label{LoopInvariant1}
+Consider the following algorithm which computes the mean of a non-empty array of integers. The mean of a nonempty list \( a_1, \ldots, a_k \) of \( k \) numbers is defined to be \( \frac{1}{k} \sum_{i=1}^{k} a_i \). Please state any assumptions you make.
+
+\begin{verbatim}
+procedure mean(A):
+    mu = A[0]
+    n = len(A)
+    for (i = 1; i<n; ++i)
+        mu = (i*mu + A[i]) / (i+1)
+    return mu
+\end{verbatim}
+
+\begin{enumerate}
+    \item[(1a)] State a valid loop invariant for the \texttt{for} loop in the algorithm that is useful for proving the correctness of the algorithm. \textbf{[10 pts]}
+    \item[(1b)] Provide the initialization component of a proof of correctness of this algorithm that uses your loop invariant from (1a). \textbf{[5 pts]}
+    \item[(1c)] Provide the maintenance component of a proof of correctness of this algorithm that uses your loop invariant from (1a). That is, assume that your loop invariant holds just before the $i$-th iteration of the \texttt{for} loop and use this assumption to show that your loop invariant holds just before iteration $(i + 1)$. \textbf{[5 pts]}
+    \item[(1d)] Provide the termination component of a proof of correctness of this algorithm that uses your loop invariant from (1a). \textbf{[5 pts]}
+\end{enumerate}
+\end{required}
+
+\begin{proof}
+% %Your proof goes here
+\end{proof}
+
+\newpage
+\subsection{Problem \ref{LoopInvariant2} \textbf{[25 pts]}}
+\begin{required} \label{LoopInvariant2}
+Consider an array \( A \) of \( n \) numbers. Begin sorting the array by repeatedly comparing adjacent elements and swapping them if they are in the wrong order. This process should start at the beginning of the array and continue until you reach the end. After the first pass, the largest element will be in its correct position at the end of the array. Continue this process for the first \( n-1 \) elements of the array.
+
+\begin{enumerate}
+    \item[(a)] Write pseudocode for this sorting algorithm, which is commonly known as the bubble-sort algorithm. \textbf{[15 pts]}
+    \item[(b)] Identify and explain the loop invariant maintained by this algorithm. Use it to prove correctness of the algorithms. \textbf{[5 pts]}
+    \item[(c)] Explain why the algorithm only needs to run for the first \( n-1 \) elements rather than for all \( n \) elements. \textbf{[5 pts]}
+\end{enumerate}
+\end{required}
+
+\begin{proof}
+% %Your proof goes here
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document} % NOTHING AFTER THIS LINE IS PART OF THE DOCUMENT
+
+
+
